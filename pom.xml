@@ -4,15 +4,47 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.anthony-jhoiro</groupId>
+    <groupId>fr.anthonyquere</groupId>
     <artifactId>dumbcrud</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <description>Dummy web server in Java</description>
+    <url>https://github.com/Anthony-Jhoiro/dumbcrud</url>
+
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <scm>
+        <url>https://github.com/Anthony-Jhoiro/dumbcrud</url>
+        <connection>scm:git:https://git@github.com/Anthony-Jhoiro/dumbcrud.git</connection>
+    </scm>
+
+    <organization>
+        <name>Anthony-Jhoiro</name>
+        <url>https://github.com/Anthony-Jhoiro</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://opensource.org/license/mit</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>Anthony-Jhoiro</id>
+            <name>Anthony Quéré</name>
+            <email>47711333+Anthony-Jhoiro@users.noreply.github.com</email>
+        </developer>
+    </developers>
 
     <dependencies>
         <dependency>
@@ -27,23 +59,109 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.16.1</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.6.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
     </dependencies>
 
-<!--    <distributionManagement>-->
-<!--        <repository>-->
-<!--            <id>github</id>-->
-<!--            <name>GitHub Packages</name>-->
-<!--            <url>https://maven.pkg.github.com/Anthony-Jhoiro/dumbcrud</url>-->
-<!--        </repository>-->
-<!--    </distributionManagement>-->
+    <!--    <distributionManagement>-->
+    <!--        <repository>-->
+    <!--            <id>github</id>-->
+    <!--            <name>GitHub Packages</name>-->
+    <!--            <url>https://maven.pkg.github.com/Anthony-Jhoiro/dumbcrud</url>-->
+    <!--        </repository>-->
+    <!--    </distributionManagement>-->
 
-    <distributionManagement>
-        <repository>
-            <id>ossrh</id>
-            <name>Central Repository OSSRH</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
+    <!--    <distributionManagement>-->
+    <!--        <repository>-->
+    <!--            <id>ossrh</id>-->
+    <!--            <name>Central Repository OSSRH</name>-->
+    <!--            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+    <!--        </repository>-->
+    <!--    </distributionManagement>-->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.6.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.3.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <tokenAuth>true</tokenAuth>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
