@@ -6,6 +6,11 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+/**
+ * DummyCrudEndpoint creates a simple web server that handles GET and POST operations on a single endpoint.
+ *
+ * @param <Domain> domain manage by the crud
+ */
 public class DummyCrudEndpoint<Domain> {
 
 
@@ -13,18 +18,27 @@ public class DummyCrudEndpoint<Domain> {
     private final CrudProvider<Domain> crudProvider;
     private final Class<Domain> domainClass;
 
+    /**
+     * Create a DummyCrudEndpoint
+     * @param domainName Path ot the crud endpoint, will be appended at the end of the url
+     * @param crudProvider Instance of a CrudProvider with the same domain as this class
+     * @param domainClass A class object extracted from the domain object
+     */
     public DummyCrudEndpoint(String domainName, CrudProvider<Domain> crudProvider, Class<Domain> domainClass) {
         this.domainName = domainName;
         this.crudProvider = crudProvider;
         this.domainClass = domainClass;
     }
 
-
-
     public record MessageResponse(String message) {
     }
 
-    public void run(int port) throws IOException, InterruptedException {
+    /**
+     * Starts the web server on the given ports. It listens to any host (0.0.0.0).
+     * @param port port to listen
+     * @throws IOException fail to parse / un-parse from JSON
+     */
+    public void run(int port) throws IOException {
         var api = HttpServer.create(new InetSocketAddress("0.0.0.0", port), 0);
 
 
